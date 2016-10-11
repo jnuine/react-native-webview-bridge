@@ -1,13 +1,15 @@
 package com.github.alinz.reactnativewebviewbridge;
 
+import android.annotation.TargetApi;
+import android.os.Build;
+import android.webkit.CookieManager;
 import android.webkit.WebView;
 
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.uimanager.ThemedReactContext;
-import com.facebook.react.views.webview.ReactWebViewManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
+import com.facebook.react.views.webview.ReactWebViewManager;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import javax.annotation.Nullable;
@@ -74,5 +76,21 @@ public class WebViewBridgeManager extends ReactWebViewManager {
     @ReactProp(name = "allowUniversalAccessFromFileURLs")
     public void setAllowUniversalAccessFromFileURLs(WebView root, boolean allows) {
         root.getSettings().setAllowUniversalAccessFromFileURLs(allows);
+    }
+
+    @ReactProp(name = "javaScriptCanOpenWindowsAutomatically")
+    public void setJavaScriptCanOpenWindowsAutomatically(WebView root, boolean allows) {
+        root.getSettings().setJavaScriptCanOpenWindowsAutomatically(allows);
+    }
+
+    @ReactProp(name = "acceptCookie")
+    public void setAcceptCookie(WebView root, boolean allows) {
+        CookieManager.getInstance().setAcceptCookie(allows);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @ReactProp(name = "acceptThirdPartyCookies")
+    public void setAcceptThirdPartyCookies(WebView root, boolean allows) {
+        CookieManager.getInstance().setAcceptThirdPartyCookies(root, allows);
     }
 }
